@@ -1,12 +1,12 @@
 import './App.css';
 import GHPTable from './components/ghp_table/GHPTable';
 import MRPTable from './components/mrp_table/MRPTable';
-
-
+import ParametersForm from './components/parameters_form/ParametersForm';
 
 function App() {
   return (
     <div className="App">
+      <ParametersForm></ParametersForm>
       <div className="level-container level-1">
         <h2>
           Poziom 1
@@ -20,7 +20,7 @@ function App() {
         </h3>
         <MRPTable></MRPTable>
       </div>
-      <div className="level-container level-2">
+      {/* <div className="level-container level-2">
         <h2>
           Poziom 2
         </h2>
@@ -45,7 +45,7 @@ function App() {
           Tabela MRP
         </h3>
         <MRPTable></MRPTable>
-      </div>
+      </div> */}
     </div>
   );
 }
