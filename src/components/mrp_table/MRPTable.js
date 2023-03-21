@@ -3,7 +3,7 @@ import './MRPTable.css';
 
 function MRPTable() {
   return (
-    <div className="GHPTable">
+    <div className="MRPTable">
       <table class="GeneratedTable">
   <thead>
     <tr>
@@ -14,15 +14,11 @@ function MRPTable() {
       <th>4</th>
       <th>5</th>
       <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>10</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Przewidywany popyt</td>
+      <td>Całkowite zapotrzebowanie</td>
       <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
@@ -31,7 +27,7 @@ function MRPTable() {
       <td>Cell</td>
     </tr>
     <tr>
-      <td>Produkcja</td>
+      <td>Planowane przyjęcia</td>
       <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
@@ -40,7 +36,34 @@ function MRPTable() {
       <td>Cell</td>
     </tr>
     <tr>
-      <td>Dostępne</td>
+      <td>Przewidywane na stanie</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+    </tr>
+    <tr>
+      <td>Zapotrzebowanie netto</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+    </tr>
+    <tr>
+      <td>Planowane zamówienia</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+      <td>Cell</td>
+    </tr>
+    <tr>
+      <td>Planowane przyjęcie zamówień</td>
       <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
@@ -50,6 +73,15 @@ function MRPTable() {
     </tr>
     <tr>
       <td>Czas realizacji</td>
+      <td>Cell</td>
+      
+    </tr>
+    <tr>
+      <td>Wielkość partii</td>
+      <td>Cell</td>
+    </tr>
+    <tr>
+      <td>Poziom BOM</td>
       <td>Cell</td>
     </tr>
     <tr>
@@ -64,5 +96,5 @@ function MRPTable() {
   );
 }
 
-export default GHPTable;
+export default MRPTable;
 
