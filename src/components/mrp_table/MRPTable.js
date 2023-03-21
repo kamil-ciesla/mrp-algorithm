@@ -4,7 +4,7 @@ import './MRPTable.css';
 function MRPTable() {
   return (
     <div className="MRPTable">
-      <table class="GeneratedTable">
+      <table className="GeneratedTable">
   <thead>
     <tr>
       <th>Dane produkcyjne Okres</th>

@@ -3,7 +3,7 @@ import './GHPTable.css';
 function GHPTable() {
   return (
     <div className="GHPTable">
-      <table class="GeneratedTable">
+      <table className="GeneratedTable">
   <thead>
     <tr>
       <th>Tydzień</th>
