@@ -1,13 +1,13 @@
 
-import './GHPTable.css';
+import './MRPTable.css';
 
-function GHPTable() {
+function MRPTable() {
   return (
     <div className="GHPTable">
       <table class="GeneratedTable">
   <thead>
     <tr>
-      <th>Tydzień</th>
+      <th>Dane produkcyjne Okres</th>
       <th>1</th>
       <th>2</th>
       <th>3</th>
@@ -29,10 +29,6 @@ function GHPTable() {
       <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
     </tr>
     <tr>
       <td>Produkcja</td>
@@ -42,17 +38,9 @@ function GHPTable() {
       <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
     </tr>
     <tr>
       <td>Dostępne</td>
-      <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
-      <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
       <td>Cell</td>
