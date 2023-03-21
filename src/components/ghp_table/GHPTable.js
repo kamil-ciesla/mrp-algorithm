@@ -1,4 +1,3 @@
-
 import './GHPTable.css';
 
 function GHPTable() {
