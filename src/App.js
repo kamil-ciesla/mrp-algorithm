@@ -6,7 +6,6 @@ import ParametersForm from './components/parameters_form/ParametersForm';
 function App() {
   return (
     <div className="App">
-      <ParametersForm></ParametersForm>
       <div className="level-container level-1">
         <h2>
           Poziom 1

@@ -12,9 +12,17 @@ table.GeneratedTable td, table.GeneratedTable th {
   border-width: 2px;
   border-color: #000000;
   border-style: solid;
-  padding: 3px;
 }
 
 table.GeneratedTable thead {
   background-color: #ffffff;
+}
+
+input{
+  text-align: center;
+
+}
+.available{
+    background-color: #5a5a5a;
+    color: white;
 }
