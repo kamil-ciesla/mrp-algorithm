@@ -17,7 +17,7 @@ function mrp(ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock) {
     const mrpValues = [];
     console.log('Starting MRP algorithm...');
     const params = { ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock };
-    console.log("Algorithm_params: " + Object.values(params));
+    //console.log("Algorithm_params: " + Object.values(params));
 
     // //  1. Użyj GHP dla znalezienia potrzeb brutto pozycji z poziomu 0
     // useGhpToFindGrossRequirementForLevel0();
@@ -49,36 +49,6 @@ function mrp(ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock) {
     return mrpValues;
 }
 
-function useGhpToFindGrossRequirementForLevel0(){
 
-}
-
-function subtractStockToGetNettoFromLevel0(){
-
-}
-
-function setProductionStartTime(){
-
-}
-
-function isThereMoreLevels(){
-
-}
-
-function transformLastNettoToNextBrutto(){
-
-}
-
-function setMaterialsAmountForLevel(){
-
-}
-
-function subtractStockAndPlannedDeliveryToFindMaterialsAmountForOrder(){
-
-}
-
-function useProductionTimeAndOtherNeccesaryInformationToFindOrderTime(){
-
-}
 
 export default mrp

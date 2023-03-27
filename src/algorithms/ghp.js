@@ -9,7 +9,7 @@
 function ghp(projectedDemandArray, productionArray, inStock) {
     console.log('Starting GHP algorithm...');
     const params = { projectedDemandArray, productionArray, inStock };
-    console.log("Algorithm_params: " + Object.values(params));
+    //console.log("Algorithm_params: " + Object.values(params));
 
     const available = []
     available.push(inStock)

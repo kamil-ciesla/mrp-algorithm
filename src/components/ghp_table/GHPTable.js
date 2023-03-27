@@ -7,25 +7,35 @@ import { useEffect } from 'react';
 function GHPTable() {
     const [projectedDemandArray, setProjectedDemandArray] = useState([0, 0, 0, 0, 20, 0, 40]);
     const [productionArray, setProductionArray] = useState([0, 0, 0, 0, 28, 0, 30]);
-
-
     const [inStock, setInStock] = useState(2);
-    const [available, setAvailable] = useState([0, 0, 0, 0, 0, 0, 0]);
-    console.log(available);
 
-    const onGhpInStockChange = event => {
+    const [available, setAvailable] = useState([]);
+
+    const updateProjectedDemandArray = (index) => (e) => {
+        const newArray = projectedDemandArray.map((item, i) => {
+            if (index === i) {
+              return Number(e.target.value);
+            } else {
+              return item;
+            }
+          });
+          console.log(newArray);    
+        setProjectedDemandArray(newArray);
+    };
+
+    const onInStockChange = event => {
         setInStock(event.target.value);
         const available = ghp(
             projectedDemandArray,
             productionArray,
-            Number(inStock)
+            inStock
         )
         setAvailable(available);
     };
 
     useEffect(() => {
         setAvailable(ghp(projectedDemandArray, productionArray, Number(inStock)));
-    }, [inStock]);
+    }, [inStock, projectedDemandArray]);
 
     return (
         <div className="GHPTable">
@@ -42,11 +52,11 @@ function GHPTable() {
                     <tr>
                         <td>Przewidywany popyt</td>
                         {
-                            projectedDemandArray.map((item) =>
+                            projectedDemandArray.map((item, index) =>
                                 <td>
-                                    <input type="number" name="projected" id=""
+                                    <input type="number" name="projected" id={index}
                                         value={item}
-
+                                        onChange={updateProjectedDemandArray(index)}
                                     />
                                 </td>)
                         }
@@ -75,7 +85,7 @@ function GHPTable() {
                         <td>Na stanie</td>
                         <td>
                             <input type="number" name="inStock" id=""
-                                onChange={onGhpInStockChange}
+                                onChange={onInStockChange}
                                 value={inStock}
                             />
                         </td>
