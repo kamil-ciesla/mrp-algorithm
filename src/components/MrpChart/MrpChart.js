@@ -41,17 +41,9 @@ function MrpChart() {
     };
 
     useEffect(() => {
-<<<<<<< HEAD
         setAvailable(ghp(projectedDemandArray, productionArray, inStock));
-        console.log(ghpLeadTime)
-        console.log(productionArray);
         setGrossRequirements(mrp(productionArray,ghpLeadTime, [0, 0, 0, 0, 0, 0])["grossRequirements"])
     }, [inStock, projectedDemandArray, productionArray]);
-=======
-        setAvailable(ghp(projectedDemandArray, productionArray, ghpInStock));
-        setGrossRequirements(mrp(productionArray,ghpLeadTime))
-    }, [ghpInStock, projectedDemandArray, productionArray]);
->>>>>>> 10e622edce63b1483baa2eefb0d8ff0dc057ee6f
 
     return (
         <div className="MrpChart">
