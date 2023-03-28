@@ -39,7 +39,7 @@ function MrpChart() {
         setAvailable(ghp(projectedDemandArray, productionArray, inStock));
         console.log(ghpLeadTime)
         console.log(productionArray);
-        setGrossRequirements(mrp(productionArray,ghpLeadTime))
+        setGrossRequirements(mrp(productionArray,ghpLeadTime, [0, 0, 0, 0, 0, 0])["grossRequirements"])
     }, [inStock, projectedDemandArray, productionArray]);
 
     return (

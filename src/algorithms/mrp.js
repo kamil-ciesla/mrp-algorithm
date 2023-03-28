@@ -12,14 +12,24 @@ const mrpValues = {
     plannedOrderReleases: [],
     plannedOrdersReceipts: [],
 }
-
-function mrp(ghpProductionArray, ghpLeadTime) {
+const scheduledReceipts=[0, 0, 0, 0, 0, 0]
+function mrp(ghpProductionArray, ghpLeadTime, scheduledReceipts, mrpInStock, length) {
     console.log('Starting MRP algorithm...');
     const grossRequirements = [];
     for(let i = ghpLeadTime; i < ghpProductionArray.length; i++){
         grossRequirements.push(ghpProductionArray[i]);
     }
-    return grossRequirements;
+
+    const projectedEndingInventory = [];
+	projectedEndingInventory.push(mrpInStock - grossRequirements[0] + scheduledReceipts[0]);
+	for(let i = 1; i < length; i++) {
+		projectedEndingInventory.push(projectedEndingInventory[i-1] - grossRequirements[i] + scheduledReceipts[i]);
+	}
+	return {
+        "grossRequirements": grossRequirements,
+        "projectedEndingInventory": projectedEndingInventory
+    }
+    
     //return grossRequirements;
     //const params = { ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock };
     //console.log("Algorithm_params: " + Object.values(params));
