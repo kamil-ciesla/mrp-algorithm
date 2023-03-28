@@ -8,10 +8,15 @@ import { useEffect } from 'react';
 function MrpChart() {
     const [projectedDemandArray, setProjectedDemandArray] = useState([0, 0, 0, 0, 20, 0, 40]);
     const [productionArray, setProductionArray] = useState([0, 0, 0, 0, 28, 0, 30]);
-    const [inStock, setInStock] = useState(2);
+    const [ghpInStock, setGhpInStock] = useState(2);
     const [ghpLeadTime, setGhpLeadTime] = useState(1);
     const [available, setAvailable] = useState([]);
+
     const [grossRequirements, setGrossRequirements] = useState([]);
+    const [mrpLeadTime, setMrpLeadTime] = useState(3);
+    const [lotSize, setLotSize] = useState(40);
+    const [mrpInStock, setMrpInStock] = useState(22);
+
 
     const updateProjectedDemandArray = (index) => (e) => {
         const newArray = [...projectedDemandArray]
@@ -26,21 +31,27 @@ function MrpChart() {
     };
 
     const onInStockChange = event => {
-        setInStock(event.target.value);
+        setGhpInStock(event.target.value);
         const available = ghp(
             projectedDemandArray,
             productionArray,
-            inStock
+            ghpInStock
         )
         setAvailable(available);
     };
 
     useEffect(() => {
+<<<<<<< HEAD
         setAvailable(ghp(projectedDemandArray, productionArray, inStock));
         console.log(ghpLeadTime)
         console.log(productionArray);
         setGrossRequirements(mrp(productionArray,ghpLeadTime, [0, 0, 0, 0, 0, 0])["grossRequirements"])
     }, [inStock, projectedDemandArray, productionArray]);
+=======
+        setAvailable(ghp(projectedDemandArray, productionArray, ghpInStock));
+        setGrossRequirements(mrp(productionArray,ghpLeadTime))
+    }, [ghpInStock, projectedDemandArray, productionArray]);
+>>>>>>> 10e622edce63b1483baa2eefb0d8ff0dc057ee6f
 
     return (
         <div className="MrpChart">
@@ -90,14 +101,19 @@ function MrpChart() {
                         </tr>
                         <tr>
                             <td>Czas realizacji</td>
-                            <td>Cell</td>
+                            <td>
+                                <input type="number" name="ghpInStock" id=""
+                                    onChange={onInStockChange}
+                                    value={String(ghpLeadTime)}
+                                />
+                            </td>
                         </tr>
                         <tr>
                             <td>Na stanie</td>
                             <td>
-                                <input type="number" name="inStock" id=""
+                                <input type="number" name="ghpInStock" id=""
                                     onChange={onInStockChange}
-                                    value={String(inStock)}
+                                    value={String(ghpInStock)}
                                 />
                             </td>
                         </tr>
@@ -179,20 +195,32 @@ function MrpChart() {
                         </tr>
                         <tr>
                             <td>Czas realizacji</td>
-                            <td>Cell</td>
+                            <td>
+                            <input type="number" name="ghpInStock" id=""
+                                    value={String(mrpLeadTime)}
+                                />
+                            </td>
 
                         </tr>
                         <tr>
                             <td>Wielkość partii</td>
-                            <td>Cell</td>
+                            <td>
+                            <input type="number" name="ghpInStock" id=""
+                                    value={String(lotSize)}
+                                />
+                            </td>
                         </tr>
                         <tr>
                             <td>Poziom BOM</td>
-                            <td>Cell</td>
+                            <td>1</td>
                         </tr>
                         <tr>
                             <td>Na stanie</td>
-                            <td>Cell</td>
+                            <td>
+                            <input type="number" name="ghpInStock" id=""
+                                    value={String(mrpInStock)}
+                                />
+                            </td>
                         </tr>
                     </tbody>
                 </table>
