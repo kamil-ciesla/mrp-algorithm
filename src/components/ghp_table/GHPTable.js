@@ -14,13 +14,25 @@ function GHPTable() {
     const updateProjectedDemandArray = (index) => (e) => {
         const newArray = projectedDemandArray.map((item, i) => {
             if (index === i) {
-              return Number(e.target.value);
+                return Number(e.target.value);
             } else {
-              return item;
+                return item;
             }
-          });
-          console.log(newArray);    
+        });
+        console.log(newArray);
         setProjectedDemandArray(newArray);
+    };
+
+    const updateProductionArray = (index) => (e) => {
+        const newArray = productionArray.map((item, i) => {
+            if (index === i) {
+                return Number(e.target.value);
+            } else {
+                return item;
+            }
+        });
+        console.log(newArray);
+        setProductionArray(newArray);
     };
 
     const onInStockChange = event => {
@@ -35,7 +47,7 @@ function GHPTable() {
 
     useEffect(() => {
         setAvailable(ghp(projectedDemandArray, productionArray, Number(inStock)));
-    }, [inStock, projectedDemandArray]);
+    }, [inStock, projectedDemandArray, productionArray]);
 
     return (
         <div className="GHPTable">
@@ -54,7 +66,7 @@ function GHPTable() {
                         {
                             projectedDemandArray.map((item, index) =>
                                 <td>
-                                    <input type="number" name="projected" id={index}
+                                    <input type="number" name="projected-demand" id={index}
                                         value={item}
                                         onChange={updateProjectedDemandArray(index)}
                                     />
@@ -64,12 +76,14 @@ function GHPTable() {
                     <tr>
                         <td>Produkcja</td>
                         {
-                            productionArray.map((item) =>
+                            productionArray.map((item, index) =>
                                 <td>
-                                    <input type="number" name="production" id=""
+                                    <input type="number" name="production" id={index}
                                         value={item}
+                                        onChange={updateProductionArray(index)}
                                     />
-                                </td>)}
+                                </td>)
+                        }
                     </tr>
                     <tr className='available'>
                         <td>Dostępne</td>
