@@ -13,6 +13,11 @@ function MrpChart() {
     const [available, setAvailable] = useState([]);
 
     const [grossRequirements, setGrossRequirements] = useState([]);
+    const [scheduledReceipts, setscheduledReceipts] = useState([0, 0, 0, 0, 0, 0]);
+    const [projectedEndingInventory, setProjectedEndingInventory] = useState([]);
+    const [netRequirements, setNetRequirements] = useState([]);
+    const [plannedOrderReleases, setPlannedOrderReleases] = useState([]);
+    const [plannedOrderReceipts, setPlannedOrderReceipts] = useState([]);
     const [mrpLeadTime, setMrpLeadTime] = useState(3);
     const [lotSize, setLotSize] = useState(40);
     const [mrpInStock, setMrpInStock] = useState(22);
@@ -42,7 +47,11 @@ function MrpChart() {
 
     useEffect(() => {
         setAvailable(ghp(projectedDemandArray, productionArray, ghpInStock));
-        setGrossRequirements(mrp(productionArray,ghpLeadTime, [0, 0, 0, 0, 0, 0])["grossRequirements"])
+        setGrossRequirements(mrp(productionArray,ghpLeadTime)["grossRequirements"])
+        setProjectedEndingInventory(mrp(productionArray,ghpLeadTime, scheduledReceipts, mrpInStock)["projectedEndingInventory"])
+        setNetRequirements(mrp(productionArray,ghpLeadTime, scheduledReceipts, mrpInStock)["netRequirements"])
+        setPlannedOrderReleases(mrp(productionArray,ghpLeadTime, scheduledReceipts, mrpInStock)["plannedOrderReleases"])
+        setPlannedOrderReceipts(mrp(productionArray,ghpLeadTime, scheduledReceipts, mrpInStock)["plannedOrderReceipts"])
     }, [ghpInStock, projectedDemandArray, productionArray]);
 
     return (
@@ -142,48 +151,58 @@ function MrpChart() {
                         </tr>
                         <tr>
                             <td>Planowane przyjęcia</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
+                            {
+                                scheduledReceipts.map((item, index) =>
+                                    <td>
+                                        <input type="number" name="production" id={index}
+                                            value={String(item)}
+                                        />
+                                    </td>)
+                            }
                         </tr>
                         <tr>
                             <td>Przewidywane na stanie</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
+                            {
+                                projectedEndingInventory.map((item, index) =>
+                                    <td>
+                                        <input type="number" name="production" id={index}
+                                            value={String(item)}
+                                        />
+                                    </td>)
+                            }
                         </tr>
                         <tr>
                             <td>Zapotrzebowanie netto</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
+                            {
+                                netRequirements.map((item, index) =>
+                                    <td>
+                                        <input type="number" name="production" id={index}
+                                            value={String(item)}
+                                        />
+                                    </td>)
+                            }
                         </tr>
                         <tr>
                             <td>Planowane zamówienia</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
+                            {
+                                plannedOrderReleases.map((item, index) =>
+                                    <td>
+                                        <input type="number" name="production" id={index}
+                                            value={String(item)}
+                                        />
+                                    </td>)
+                            }
                         </tr>
                         <tr>
                             <td>Planowane przyjęcie zamówień</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
+                            {
+                                plannedOrderReceipts.map((item, index) =>
+                                    <td>
+                                        <input type="number" name="production" id={index}
+                                            value={String(item)}
+                                        />
+                                    </td>)
+                            }
                         </tr>
                         <tr>
                             <td>Czas realizacji</td>
