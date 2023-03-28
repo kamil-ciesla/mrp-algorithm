@@ -1,5 +1,7 @@
 import './GHPTable.css';
 import ghp from '../../algorithms/ghp'
+import mrp from '../../algorithms/mrp'
+
 
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -12,13 +14,9 @@ function GHPTable() {
     const [available, setAvailable] = useState([]);
 
     const updateProjectedDemandArray = (index) => (e) => {
-        const newArray = projectedDemandArray.map((item, i) => {
-            if (index === i) {
-                return Number(e.target.value);
-            } else {
-                return item;
-            }
-        });
+        const newArray = [...projectedDemandArray]
+        newArray[index] = e.target.value;
+
         console.log(newArray);
         setProjectedDemandArray(newArray);
     };
@@ -47,6 +45,7 @@ function GHPTable() {
 
     useEffect(() => {
         setAvailable(ghp(projectedDemandArray, productionArray, Number(inStock)));
+        console.log(mrp(productionArray, 1));
     }, [inStock, projectedDemandArray, productionArray]);
 
     return (

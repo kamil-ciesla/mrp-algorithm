@@ -13,10 +13,17 @@ const mrpValues = {
     plannedOrdersReceipts: [],
 }
 
-function mrp(ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock) {
-    const mrpValues = [];
+function mrp(ghpProductionArray, ghpLeadTime) {
     console.log('Starting MRP algorithm...');
-    const params = { ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock };
+    const grossRequirements = [];
+    for(let i = ghpLeadTime; i < ghpProductionArray.length; i++){
+        grossRequirements.push(ghpProductionArray[i]);
+    }
+    return {
+        gross_requirements: grossRequirements
+    }
+    //return grossRequirements;
+    //const params = { ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock };
     //console.log("Algorithm_params: " + Object.values(params));
 
     // //  1. Użyj GHP dla znalezienia potrzeb brutto pozycji z poziomu 0
