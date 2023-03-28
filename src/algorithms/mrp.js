@@ -19,9 +19,7 @@ function mrp(ghpProductionArray, ghpLeadTime) {
     for(let i = ghpLeadTime; i < ghpProductionArray.length; i++){
         grossRequirements.push(ghpProductionArray[i]);
     }
-    return {
-        gross_requirements: grossRequirements
-    }
+    return grossRequirements;
     //return grossRequirements;
     //const params = { ghpLeadTime, ghpInStock, mrpLeadTime, lotSize, mrpInStock };
     //console.log("Algorithm_params: " + Object.values(params));

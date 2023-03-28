@@ -9,8 +9,9 @@ function MrpChart() {
     const [projectedDemandArray, setProjectedDemandArray] = useState([0, 0, 0, 0, 20, 0, 40]);
     const [productionArray, setProductionArray] = useState([0, 0, 0, 0, 28, 0, 30]);
     const [inStock, setInStock] = useState(2);
-
+    const [ghpLeadTime, setGhpLeadTime] = useState(1);
     const [available, setAvailable] = useState([]);
+    const [grossRequirements, setGrossRequirements] = useState([]);
 
     const updateProjectedDemandArray = (index) => (e) => {
         const newArray = [...projectedDemandArray]
@@ -36,7 +37,9 @@ function MrpChart() {
 
     useEffect(() => {
         setAvailable(ghp(projectedDemandArray, productionArray, inStock));
-        console.log(mrp(productionArray, 1));
+        console.log(ghpLeadTime)
+        console.log(productionArray);
+        setGrossRequirements(mrp(productionArray,ghpLeadTime))
     }, [inStock, projectedDemandArray, productionArray]);
 
     return (
@@ -120,12 +123,14 @@ function MrpChart() {
                     <tbody>
                         <tr>
                             <td>Całkowite zapotrzebowanie</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
-                            <td>Cell</td>
+                            {
+                                grossRequirements.map((item, index) =>
+                                    <td>
+                                        <input type="number" name="production" id={index}
+                                            value={String(item)}
+                                        />
+                                    </td>)
+                            }
                         </tr>
                         <tr>
                             <td>Planowane przyjęcia</td>
