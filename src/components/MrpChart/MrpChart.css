@@ -24,7 +24,6 @@ input {
 }
 .mrp-container {
   width: 80vw;
-  border: 2px solid black;
   padding: 2rem;
 }
 .disabled {

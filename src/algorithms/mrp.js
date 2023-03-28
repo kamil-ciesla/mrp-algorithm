@@ -1,37 +1,21 @@
-const ghpValues = {
-  projectedDemand: [],
-  production: [],
-  available: [],
-};
-
-const mrpValues = {
-  grossRequirements: [],
-  projectedEndingInventory: [],
-  netRequirements: [],
-  scheduledReceipts: [],
-  plannedOrderReleases: [],
-  plannedOrdersReceipts: [],
-};
-
 function mrp(
   ghpProductionArray,
   ghpLeadTime,
-  scheduledReceipts = 0,
+  scheduledReceipts = [],
   mrpInStock,
   mrpLeadTime = 3,
-  lotSize = 40
+  lotSize
 ) {
-  console.log("Starting MRP algorithm...");
-
   const grossRequirements = [];
   for (let i = ghpLeadTime; i < ghpProductionArray.length; i++) {
     grossRequirements.push(ghpProductionArray[i]);
   }
   const weeksLength = grossRequirements.length;
   const projectedEndingInventory = [];
-  let netRequirements = [];
-  let plannedOrderReleases = [];
-  let plannedOrderReceipts = [];
+  const netRequirements = [];
+  const plannedOrderReleases = [];
+  const plannedOrderReceipts = [];
+
   for (let week = 0; week < weeksLength; week++) {
     netRequirements.push(0);
     plannedOrderReleases.push(0);
@@ -41,16 +25,18 @@ function mrp(
   projectedEndingInventory.push(
     mrpInStock - grossRequirements[0] + scheduledReceipts[0]
   );
+
   for (let week = 1; week < weeksLength; week++) {
     let projectedEndingInventoryValue =
       projectedEndingInventory[week - 1] -
       grossRequirements[week] +
       scheduledReceipts[week];
+
     if (projectedEndingInventoryValue < 0 && week - mrpLeadTime >= 0) {
       netRequirements[week] = -projectedEndingInventoryValue;
-      plannedOrderReleases[week - mrpLeadTime] = lotSize;
-      plannedOrderReceipts[week] = lotSize;
-      projectedEndingInventoryValue += lotSize;
+      plannedOrderReleases[week - mrpLeadTime] = Number(lotSize);
+      plannedOrderReceipts[week] = Number(lotSize);
+      projectedEndingInventoryValue += Number(lotSize);
     }
     projectedEndingInventory.push(projectedEndingInventoryValue);
   }

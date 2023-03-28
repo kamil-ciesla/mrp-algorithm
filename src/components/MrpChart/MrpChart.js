@@ -17,7 +17,7 @@ function MrpChart() {
   const [available, setAvailable] = useState([]);
 
   const [grossRequirements, setGrossRequirements] = useState([]);
-  const [scheduledReceipts, setscheduledReceipts] = useState([
+  const [scheduledReceipts, setScheduledReceipts] = useState([
     0, 0, 0, 0, 0, 0,
   ]);
   const [projectedEndingInventory, setProjectedEndingInventory] = useState([]);
@@ -38,6 +38,12 @@ function MrpChart() {
     const newArray = [...productionArray];
     newArray[index] = e.target.value;
     setProductionArray(newArray);
+  };
+
+  const updateScheduledReceipts = (index) => (e) => {
+    const newArray = [...productionArray];
+    newArray[index] = e.target.value;
+    setScheduledReceipts(newArray);
   };
 
   const updateGhpLeadTime = (event) => {
@@ -64,30 +70,28 @@ function MrpChart() {
 
   useEffect(() => {
     setAvailable(ghp(projectedDemandArray, productionArray, ghpInStock));
-    setGrossRequirements(
-      mrp(productionArray, ghpLeadTime)["grossRequirements"]
+    const mrpResult = mrp(
+      productionArray,
+      ghpLeadTime,
+      scheduledReceipts,
+      mrpInStock,
+      mrpLeadTime,
+      lotSize
     );
-    setProjectedEndingInventory(
-      mrp(productionArray, ghpLeadTime, scheduledReceipts, mrpInStock)[
-        "projectedEndingInventory"
-      ]
-    );
-    setNetRequirements(
-      mrp(productionArray, ghpLeadTime, scheduledReceipts, mrpInStock)[
-        "netRequirements"
-      ]
-    );
-    setPlannedOrderReleases(
-      mrp(productionArray, ghpLeadTime, scheduledReceipts, mrpInStock)[
-        "plannedOrderReleases"
-      ]
-    );
-    setPlannedOrderReceipts(
-      mrp(productionArray, ghpLeadTime, scheduledReceipts, mrpInStock)[
-        "plannedOrderReceipts"
-      ]
-    );
-  }, [ghpLeadTime, ghpInStock, projectedDemandArray, productionArray]);
+    setGrossRequirements(mrpResult["grossRequirements"]);
+    setProjectedEndingInventory(mrpResult["projectedEndingInventory"]);
+    setNetRequirements(mrpResult["netRequirements"]);
+    setPlannedOrderReleases(mrpResult["plannedOrderReleases"]);
+    setPlannedOrderReceipts(mrpResult["plannedOrderReceipts"]);
+  }, [
+    ghpLeadTime,
+    ghpInStock,
+    projectedDemandArray,
+    productionArray,
+    mrpLeadTime,
+    lotSize,
+    mrpInStock,
+  ]);
 
   return (
     <div className="MrpChart">
@@ -193,6 +197,7 @@ function MrpChart() {
                     type="number"
                     name="production"
                     id={index}
+                    onChange={updateScheduledReceipts(index)}
                     value={String(item)}
                   />
                 </td>
