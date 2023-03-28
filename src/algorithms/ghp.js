@@ -9,12 +9,11 @@
 function ghp(projectedDemandArray, productionArray, inStock) {
     console.log('Starting GHP algorithm...');
     const params = { projectedDemandArray, productionArray, inStock };
-    //console.log("Algorithm_params: " + Object.values(params));
 
     const available = []
-    available.push(inStock)
+    available.push(Number(inStock))
     for (let i = 1; i < projectedDemandArray.length; i++) {
-        available.push(calculateAvailable(available.at(-1), projectedDemandArray[i], productionArray[i]));
+        available.push(calculateAvailable(Number(available.at(-1)), Number(projectedDemandArray[i]), Number(productionArray[i])));
     }
 
     return available;
