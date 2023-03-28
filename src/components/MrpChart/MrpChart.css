@@ -8,7 +8,8 @@ table.GeneratedTable {
   color: #000000;
 }
 
-table.GeneratedTable td, table.GeneratedTable th {
+table.GeneratedTable td,
+table.GeneratedTable th {
   border-width: 2px;
   border-color: #000000;
   border-style: solid;
@@ -18,11 +19,20 @@ table.GeneratedTable thead {
   background-color: #ffffff;
 }
 
-input{
+input {
   text-align: center;
-
 }
-.available{
-    background-color: #5a5a5a;
-    color: white;
+.mrp-container {
+  width: 80vw;
+  border: 2px solid black;
+  padding: 2rem;
+}
+.disabled {
+  background-color: #5a5a5a;
+  color: white;
+}
+
+.calculated {
+  background-color: #66759a;
+  color: white;
 }
