@@ -6,7 +6,6 @@ function App() {
     <div className="App">
       <div className="mrp-container card">
         <div className="level-container level-1">
-          <h2>Poziom 1</h2>
           <MrpChart></MrpChart>
         </div>
       </div>

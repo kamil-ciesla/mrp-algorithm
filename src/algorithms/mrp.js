@@ -23,14 +23,14 @@ function mrp(
   }
 
   projectedEndingInventory.push(
-    mrpInStock - grossRequirements[0] + scheduledReceipts[0]
+    mrpInStock - grossRequirements[0] + Number(scheduledReceipts[0])
   );
 
   for (let week = 1; week < weeksLength; week++) {
     let projectedEndingInventoryValue =
-      projectedEndingInventory[week - 1] -
-      grossRequirements[week] +
-      scheduledReceipts[week];
+      Number(projectedEndingInventory[week - 1]) -
+      Number(grossRequirements[week]) +
+      Number(scheduledReceipts[week]);
 
     if (projectedEndingInventoryValue < 0 && week - mrpLeadTime >= 0) {
       netRequirements[week] = -projectedEndingInventoryValue;

@@ -41,8 +41,10 @@ function MrpChart() {
   };
 
   const updateScheduledReceipts = (index) => (e) => {
-    const newArray = [...productionArray];
+    const newArray = [...scheduledReceipts];
     newArray[index] = e.target.value;
+    console.log("new scheduled receipts");
+    console.log(newArray);
     setScheduledReceipts(newArray);
   };
 
@@ -88,6 +90,7 @@ function MrpChart() {
     ghpInStock,
     projectedDemandArray,
     productionArray,
+    scheduledReceipts,
     mrpLeadTime,
     lotSize,
     mrpInStock,
@@ -97,7 +100,7 @@ function MrpChart() {
     <div className="MrpChart">
       <div className="ghp-table">
         <h3>Tabela GHP</h3>
-        <table className="GeneratedTable">
+        <table className="table GeneratedTable">
           <thead>
             <tr className="disabled">
               <th>Tydzień</th>
@@ -108,7 +111,7 @@ function MrpChart() {
           </thead>
           <tbody>
             <tr>
-              <td className="disabled">Przewidywany popyt</td>
+              <th className="disabled">Przewidywany popyt</th>
               {projectedDemandArray.map((item, index) => (
                 <td>
                   <input
@@ -122,7 +125,7 @@ function MrpChart() {
               ))}
             </tr>
             <tr>
-              <td className="disabled">Produkcja</td>
+              <th className="disabled">Produkcja</th>
               {productionArray.map((item, index) => (
                 <td>
                   <input
@@ -136,13 +139,13 @@ function MrpChart() {
               ))}
             </tr>
             <tr className="calculated">
-              <td className="disabled">Dostępne</td>
+              <th className="disabled">Dostępne</th>
               {available.map((item) => (
                 <td>{item}</td>
               ))}
             </tr>
             <tr>
-              <td className="disabled">Czas realizacji</td>
+              <th className="disabled">Czas realizacji</th>
               <td>
                 <input
                   type="number"
@@ -154,7 +157,7 @@ function MrpChart() {
               </td>
             </tr>
             <tr>
-              <td className="disabled">Na stanie</td>
+              <th className="disabled">Na stanie</th>
               <td>
                 <input
                   type="number"
@@ -170,7 +173,8 @@ function MrpChart() {
       </div>
       <div className="mrp-table">
         <h3>Tabela MRP</h3>
-        <table className="GeneratedTable">
+        <h4>Poziom 1</h4>
+        <table className="table GeneratedTable">
           <thead>
             <tr className="disabled">
               <th>Dane produkcyjne Okres</th>
@@ -184,13 +188,13 @@ function MrpChart() {
           </thead>
           <tbody>
             <tr className="calculated">
-              <td className="disabled">Całkowite zapotrzebowanie</td>
+              <th className="disabled">Całkowite zapotrzebowanie</th>
               {grossRequirements.map((item) => (
                 <td>{item}</td>
               ))}
             </tr>
             <tr>
-              <td className="disabled">Planowane przyjęcia</td>
+              <th className="disabled">Planowane przyjęcia</th>
               {scheduledReceipts.map((item, index) => (
                 <td>
                   <input
@@ -204,31 +208,31 @@ function MrpChart() {
               ))}
             </tr>
             <tr className="calculated">
-              <td className="disabled">Przewidywane na stanie</td>
+              <th className="disabled">Przewidywane na stanie</th>
               {projectedEndingInventory.map((item) => (
                 <td>{item}</td>
               ))}
             </tr>
             <tr className="calculated">
-              <td className="disabled">Zapotrzebowanie netto</td>
+              <th className="disabled">Zapotrzebowanie netto</th>
               {netRequirements.map((item) => (
                 <td>{item}</td>
               ))}
             </tr>
             <tr className="calculated">
-              <td className="disabled">Planowane zamówienia</td>
+              <th className="disabled">Planowane zamówienia</th>
               {plannedOrderReleases.map((item) => (
                 <td>{item}</td>
               ))}
             </tr>
             <tr className="calculated">
-              <td className="disabled">Planowane przyjęcie zamówień</td>
+              <th className="disabled">Planowane przyjęcie zamówień</th>
               {plannedOrderReceipts.map((item) => (
                 <td>{item}</td>
               ))}
             </tr>
             <tr>
-              <td className="disabled">Czas realizacji</td>
+              <th className="disabled">Czas realizacji</th>
               <td>
                 <input
                   type="number"
@@ -239,7 +243,7 @@ function MrpChart() {
               </td>
             </tr>
             <tr>
-              <td className="disabled">Wielkość partii</td>
+              <th className="disabled">Wielkość partii</th>
               <td>
                 <input
                   type="number"
@@ -250,11 +254,11 @@ function MrpChart() {
               </td>
             </tr>
             <tr className="disabled">
-              <td>Poziom BOM</td>
+              <th>Poziom BOM</th>
               <td>1</td>
             </tr>
             <tr>
-              <td className="disabled">Na stanie</td>
+              <th className="disabled">Na stanie</th>
               <td>
                 <input
                   type="number"
