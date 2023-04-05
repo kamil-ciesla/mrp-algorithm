@@ -7,7 +7,6 @@
     available(array)
 */
 function ghp(projectedDemandArray, productionArray, inStock) {
-  console.log("Starting GHP algorithm...");
   const params = { projectedDemandArray, productionArray, inStock };
 
   const available = [];

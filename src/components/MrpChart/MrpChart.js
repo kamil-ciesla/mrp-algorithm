@@ -6,19 +6,22 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function MrpChart() {
+  const [ghpInStock, setGhpInStock] = useState(2);
+  const [ghpLeadTime, setGhpLeadTime] = useState(1);
+  const [available, setAvailable] = useState([]);
+
+  const [ghpWeeksAmount, setGhpWeeksAmount] = useState(7);
+
   const [projectedDemandArray, setProjectedDemandArray] = useState([
     0, 0, 0, 0, 20, 0, 40,
   ]);
   const [productionArray, setProductionArray] = useState([
     0, 0, 0, 0, 28, 0, 30,
   ]);
-  const [ghpInStock, setGhpInStock] = useState(2);
-  const [ghpLeadTime, setGhpLeadTime] = useState(1);
-  const [available, setAvailable] = useState([]);
 
   const [grossRequirements, setGrossRequirements] = useState([]);
   const [scheduledReceipts, setScheduledReceipts] = useState([
-    0, 0, 0, 0, 0, 0,
+    ...Array(ghpWeeksAmount).fill(0),
   ]);
   const [projectedEndingInventory, setProjectedEndingInventory] = useState([]);
   const [netRequirements, setNetRequirements] = useState([]);
@@ -43,13 +46,12 @@ function MrpChart() {
   const updateScheduledReceipts = (index) => (e) => {
     const newArray = [...scheduledReceipts];
     newArray[index] = e.target.value;
-    console.log("new scheduled receipts");
-    console.log(newArray);
     setScheduledReceipts(newArray);
   };
 
   const updateGhpLeadTime = (event) => {
-    setGhpLeadTime(event.target.value);
+    const newGhpLeadTime = Number(event.target.value);
+    setGhpLeadTime(newGhpLeadTime);
   };
 
   const updateGhpInStock = (event) => {
@@ -69,9 +71,10 @@ function MrpChart() {
   const updateMrpInStock = (event) => {
     setMrpInStock(event.target.value);
   };
+  const updateMrpChart = (event) => {
+    const ghpResults = ghp(projectedDemandArray, productionArray, ghpInStock);
+    setAvailable(ghpResults);
 
-  useEffect(() => {
-    setAvailable(ghp(projectedDemandArray, productionArray, ghpInStock));
     const mrpResult = mrp(
       productionArray,
       ghpLeadTime,
@@ -85,12 +88,15 @@ function MrpChart() {
     setNetRequirements(mrpResult["netRequirements"]);
     setPlannedOrderReleases(mrpResult["plannedOrderReleases"]);
     setPlannedOrderReceipts(mrpResult["plannedOrderReceipts"]);
+  };
+
+  useEffect(() => {
+    updateMrpChart();
   }, [
     ghpLeadTime,
     ghpInStock,
     projectedDemandArray,
     productionArray,
-    scheduledReceipts,
     mrpLeadTime,
     lotSize,
     mrpInStock,
@@ -104,9 +110,11 @@ function MrpChart() {
           <thead>
             <tr className="disabled">
               <th>Tydzień</th>
-              {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-                <td>{item}</td>
-              ))}
+              {Array.from({ length: ghpWeeksAmount }, (_, i) => i + 1).map(
+                (item) => (
+                  <td>{item}</td>
+                )
+              )}
             </tr>
           </thead>
           <tbody>
@@ -149,7 +157,6 @@ function MrpChart() {
               <td>
                 <input
                   type="number"
-                  name="ghpInStock"
                   id=""
                   onChange={updateGhpLeadTime}
                   value={String(ghpLeadTime)}
@@ -161,7 +168,6 @@ function MrpChart() {
               <td>
                 <input
                   type="number"
-                  name="ghpInStock"
                   id=""
                   onChange={updateGhpInStock}
                   value={String(ghpInStock)}
@@ -178,12 +184,11 @@ function MrpChart() {
           <thead>
             <tr className="disabled">
               <th>Dane produkcyjne Okres</th>
-              <th>1</th>
-              <th>2</th>
-              <th>3</th>
-              <th>4</th>
-              <th>5</th>
-              <th>6</th>
+              {Array.from({ length: ghpWeeksAmount }, (_, i) => i + 1).map(
+                (item) => (
+                  <td>{item}</td>
+                )
+              )}
             </tr>
           </thead>
           <tbody>

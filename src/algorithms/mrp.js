@@ -6,11 +6,11 @@ function mrp(
   mrpLeadTime = 3,
   lotSize
 ) {
-  const grossRequirements = [];
+  const weeksLength = ghpProductionArray.length;
+  const grossRequirements = Array(weeksLength).fill(0);
   for (let i = ghpLeadTime; i < ghpProductionArray.length; i++) {
-    grossRequirements.push(ghpProductionArray[i]);
+    grossRequirements[i - ghpLeadTime] = ghpProductionArray[i];
   }
-  const weeksLength = grossRequirements.length;
   const projectedEndingInventory = [];
   const netRequirements = [];
   const plannedOrderReleases = [];
