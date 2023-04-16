@@ -6,15 +6,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function MrpTable(props) {
-    const ghpInStock = props.ghpResults.ghpInStock;
-    const ghpLeadTime = props.ghpResults.ghpLeadTime;
+    const ghpInStock = props.ghpData.ghpInStock;
+    const ghpLeadTime = props.ghpData.ghpLeadTime;
 
-    const projectedDemandArray = props.ghpResults.projectedDemandArray;
-    const productionArray = props.ghpResults.productionArray;
+    const projectedDemandArray = props.ghpData.projectedDemandArray;
+    const productionArray = props.ghpData.productionArray;
 
     const [mrpWeeksAmount, setMrpWeeksAmount] = useState(7);
 
-    const [grossRequirements, setGrossRequirements] = useState([]);
+    const [grossRequirements, setGrossRequirements] = useState(props.ghpData.grossRequirements);
     const [scheduledReceipts, setScheduledReceipts] = useState([
         ...Array(mrpWeeksAmount).fill(0),
     ]);
@@ -47,13 +47,12 @@ function MrpTable(props) {
         console.log(productionArray)
         const mrpResult = mrp(
             productionArray,
-            ghpLeadTime,
+            grossRequirements,
             scheduledReceipts,
             mrpInStock,
             mrpLeadTime,
             lotSize
         );
-        setGrossRequirements(mrpResult["grossRequirements"]);
         setProjectedEndingInventory(mrpResult["projectedEndingInventory"]);
         setNetRequirements(mrpResult["netRequirements"]);
         setPlannedOrderReleases(mrpResult["plannedOrderReleases"]);
@@ -75,7 +74,7 @@ function MrpTable(props) {
     return (
         <div className="mrp-table">
             <h3>Tabela MRP</h3>
-            <h4>Poziom 1</h4>
+            <h4>Poziom BOM: {props.level}</h4>
             <table className="table GeneratedTable">
                 <thead>
                     <tr className="disabled">
@@ -153,10 +152,6 @@ function MrpTable(props) {
                                 value={String(lotSize)}
                             />
                         </td>
-                    </tr>
-                    <tr className="disabled">
-                        <th>Poziom BOM</th>
-                        <td>1</td>
                     </tr>
                     <tr>
                         <th className="disabled">Na stanie</th>

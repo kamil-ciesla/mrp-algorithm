@@ -4,7 +4,7 @@ import ghp from "../../algorithms/ghp";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function GhpTable({ handleGhpResults }) {
+function GhpTable(props) {
     const [ghpInStock, setGhpInStock] = useState(2);
     const [ghpLeadTime, setGhpLeadTime] = useState(1);
     const [available, setAvailable] = useState([]);
@@ -42,9 +42,9 @@ function GhpTable({ handleGhpResults }) {
     };
 
     const updateGhpTable = (event) => {
-        const ghpResults = ghp(projectedDemandArray, productionArray, ghpLeadTime, ghpInStock);
-        setAvailable(ghpResults['available']);
-        handleGhpResults(ghpResults);
+        const ghpData = ghp(projectedDemandArray, productionArray, ghpLeadTime, ghpInStock);
+        setAvailable(ghpData['available']);
+        props.handleGhpData(ghpData);
     };
 
     useEffect(() => {

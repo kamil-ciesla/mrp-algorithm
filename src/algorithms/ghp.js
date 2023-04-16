@@ -16,7 +16,8 @@ function ghp(projectedDemandArray, productionArray, ghpLeadTime, inStock) {
     ghpInStock: inStock,
     ghpLeadTime: ghpLeadTime,
     projectedDemandArray: projectedDemandArray,
-    productionArray: productionArray
+    productionArray: productionArray,
+    grossRequirements: calculateGrossRequirements(productionArray, ghpLeadTime)
   }
 }
 
@@ -26,6 +27,14 @@ function calculateAvailable(
   currentProduction
 ) {
   return previousAvailable - currentProjectedDemand + currentProduction;
+}
+
+function calculateGrossRequirements(productionArray, ghpLeadTime) {
+  const grossRequirements = [Array(productionArray.length).fill(0)];
+  for (let i = ghpLeadTime; i < productionArray.length; i++) {
+    grossRequirements[i - ghpLeadTime] = productionArray[i];
+  }
+  return grossRequirements;
 }
 
 export default ghp;
