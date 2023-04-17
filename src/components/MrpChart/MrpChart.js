@@ -29,6 +29,7 @@ function MrpChart() {
         ghpResults.grossRequirements ?
           [
             <MrpTable
+              productName={'Blaty'}
               weeks={10}
               grossRequirements={ghpResults.grossRequirements}
               leadTime={3}
@@ -39,6 +40,7 @@ function MrpChart() {
             />,
             firstLevelMrpResults ?
               <MrpTable
+                productName={'Płyta pilśniowa'}
                 weeks={10}
                 grossRequirements={firstLevelMrpResults}
                 leadTime={1}
@@ -47,7 +49,16 @@ function MrpChart() {
                 inStock={10}
               />
               :
-              <div>Loading mrp..</div>
+              <div>Loading mrp..</div>,
+            <MrpTable
+              productName={'Nogi'}
+              weeks={10}
+              grossRequirements={[0, 0, 0, 112, 0, 120]}
+              leadTime={2}
+              lotSize={120}
+              level={3}
+              inStock={40}
+            />
           ]
           :
           <div>Loading mrp..</div>

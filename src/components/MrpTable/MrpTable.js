@@ -65,7 +65,7 @@ function MrpTable(props) {
 
     return (
         <div className="mrp-table">
-            <h4>Poziom BOM: {props.level}</h4>
+            <h4>Produkt: {props.productName}</h4>
             <table className="table GeneratedTable">
                 <thead>
                     <tr className="disabled">
@@ -141,6 +141,17 @@ function MrpTable(props) {
                                 name="lotSize"
                                 onChange={event => { setLotSize(event.target.value) }}
                                 value={String(lotSize)}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th className="disabled">Poziom BOM</th>
+                        <td>
+                            <input
+                                type="number"
+                                name="level"
+                                value={props.level}
+                                readOnly
                             />
                         </td>
                     </tr>
