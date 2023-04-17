@@ -56,7 +56,7 @@ function MrpChart() {
               grossRequirements={[0, 0, 0, 112, 0, 120]}
               leadTime={2}
               lotSize={120}
-              level={3}
+              level={1}
               inStock={40}
             />
           ]
