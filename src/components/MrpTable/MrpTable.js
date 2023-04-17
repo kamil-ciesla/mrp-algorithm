@@ -49,10 +49,15 @@ function MrpTable(props) {
         setNetRequirements(mrpResult.netRequirements);
         setPlannedOrderReleases(mrpResult.plannedOrderReleases);
         setPlannedOrderReceipts(mrpResult.plannedOrderReceipts);
+
+        if (props.passDataToNextLevel) {
+            props.passDataToNextLevel(mrpResult.plannedOrderReleases);
+        }
     };
 
     useEffect(() => { updateMrpChart() }, [
         props.grossRequirements,
+        scheduledReceipts,
         leadTime,
         lotSize,
         inStock,
@@ -76,7 +81,7 @@ function MrpTable(props) {
                     <tr className="calculated">
                         <th className="disabled">Całkowite zapotrzebowanie</th>
                         {props.grossRequirements.map((item) => (
-                            <td>{item}</td>
+                            <td>{String(item) == '0' ? '' : String(item)}</td>
                         ))}
                     </tr>
                     <tr>
@@ -88,7 +93,7 @@ function MrpTable(props) {
                                     name="production"
                                     id={index}
                                     onChange={updateScheduledReceipts(index)}
-                                    value={String(item)}
+                                    value={String(item) == '0' ? '' : String(item)}
                                 />
                             </td>
                         ))}
@@ -102,19 +107,19 @@ function MrpTable(props) {
                     <tr className="calculated">
                         <th className="disabled">Zapotrzebowanie netto</th>
                         {netRequirements.map((item) => (
-                            <td>{item}</td>
+                            <td>{String(item) == '0' ? '' : String(item)}   </td>
                         ))}
                     </tr>
                     <tr className="calculated">
                         <th className="disabled">Planowane zamówienia</th>
                         {plannedOrderReleases.map((item) => (
-                            <td>{item}</td>
+                            <td>{String(item) == '0' ? '' : String(item)}</td>
                         ))}
                     </tr>
                     <tr className="calculated">
                         <th className="disabled">Planowane przyjęcie zamówień</th>
                         {plannedOrderReceipts.map((item) => (
-                            <td>{item}</td>
+                            <td>{String(item) == '0' ? '' : String(item)}</td>
                         ))}
                     </tr>
                     <tr>

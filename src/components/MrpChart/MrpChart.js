@@ -12,38 +12,42 @@ function MrpChart() {
     setGhpResults(newGhpResults);
   }
 
-  const [mrpResults, setMrpResults] = useState();
+  const [firstLevelMrpResults, setFirstLevelMrpResults] = useState();
 
   return (
     <div className="MrpChart">
       <GhpTable
-        weeks={7}
-        handleResults={handleGhpResults}
+        weeks={10}
         leadTime={1}
         inStock={2}
         projectedDemandArray={[0, 0, 0, 0, 20, 0, 40]}
         productionArray={[0, 0, 0, 0, 28, 0, 30]}
+        handleResults={handleGhpResults}
       />
       <h3>Tabele MRP</h3>
       {
         ghpResults.grossRequirements ?
           [
             <MrpTable
-              weeks={7}
+              weeks={10}
               grossRequirements={ghpResults.grossRequirements}
               leadTime={3}
               lotSize={40}
               level={1}
               inStock={22}
+              passDataToNextLevel={setFirstLevelMrpResults}
             />,
-            <MrpTable
-              weeks={7}
-              grossRequirements={[40, 0, 0, 0, 0, 0, 0]}
-              leadTime={1}
-              lotSize={50}
-              level={2}
-              inStock={10}
-            />
+            firstLevelMrpResults ?
+              <MrpTable
+                weeks={10}
+                grossRequirements={firstLevelMrpResults}
+                leadTime={1}
+                lotSize={50}
+                level={2}
+                inStock={10}
+              />
+              :
+              <div>Loading mrp..</div>
           ]
           :
           <div>Loading mrp..</div>

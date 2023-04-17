@@ -5,14 +5,17 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function GhpTable(props) {
+    // =========================================
+    // Parametry GHP
     const [weeks] = useState(props.weeks);
     const [leadTime, setLeadTime] = useState(props.leadTime);
     const [inStock, setInStock] = useState(props.inStock);
-    const [available, setAvailable] = useState([]);
-
-
     const [projectedDemandArray, setProjectedDemandArray] = useState(props.projectedDemandArray);
     const [productionArray, setProductionArray] = useState(props.productionArray);
+
+    const [available, setAvailable] = useState([]);
+
+    fillTablesIfShorterThanWeeks();
 
     const updateProjectedDemandArray = (index) => (e) => {
         const newArray = [...projectedDemandArray];
@@ -50,6 +53,27 @@ function GhpTable(props) {
         productionArray,
     ]);
 
+    function fillTablesIfShorterThanWeeks() {
+        if (projectedDemandArray.length < weeks) {
+            for (let i = 0; i < weeks - projectedDemandArray.length; i++) {
+                projectedDemandArray.push(0);
+            }
+            setProjectedDemandArray(projectedDemandArray);
+        }
+        if (productionArray.length < weeks) {
+            for (let i = 0; i < weeks - productionArray.length; i++) {
+                productionArray.push(0);
+            }
+            setProductionArray(productionArray);
+        }
+        if (available.length < weeks) {
+            for (let i = 0; i < weeks - available.length; i++) {
+                available.push(0);
+            }
+            setAvailable(available);
+        }
+    }
+
     return (
         <div className="ghp-table">
             <h3>Tabela GHP</h3>
@@ -73,7 +97,7 @@ function GhpTable(props) {
                                     type="number"
                                     name="projected-demand"
                                     id={index}
-                                    value={String(item)}
+                                    value={String(item) == '0' ? '' : String(item)}
                                     onChange={updateProjectedDemandArray(index)}
                                 />
                             </td>
@@ -87,7 +111,7 @@ function GhpTable(props) {
                                     type="number"
                                     name="production"
                                     id={index}
-                                    value={String(item)}
+                                    value={String(item) == '0' ? '' : String(item)}
                                     onChange={updateProductionArray(index)}
                                 />
                             </td>
