@@ -5,18 +5,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function GhpTable(props) {
-    const [ghpInStock, setGhpInStock] = useState(2);
-    const [ghpLeadTime, setGhpLeadTime] = useState(1);
+    const [weeks] = useState(props.weeks);
+    const [leadTime, setLeadTime] = useState(props.leadTime);
+    const [inStock, setInStock] = useState(props.inStock);
     const [available, setAvailable] = useState([]);
 
-    const [ghpWeeksAmount, setGhpWeeksAmount] = useState(7);
 
-    const [projectedDemandArray, setProjectedDemandArray] = useState([
-        0, 0, 0, 0, 20, 0, 40,
-    ]);
-    const [productionArray, setProductionArray] = useState([
-        0, 0, 0, 0, 28, 0, 30,
-    ]);
+    const [projectedDemandArray, setProjectedDemandArray] = useState(props.projectedDemandArray);
+    const [productionArray, setProductionArray] = useState(props.productionArray);
 
     const updateProjectedDemandArray = (index) => (e) => {
         const newArray = [...projectedDemandArray];
@@ -32,26 +28,24 @@ function GhpTable(props) {
 
     const updateGhpLeadTime = (event) => {
         const newGhpLeadTime = Number(event.target.value);
-        setGhpLeadTime(newGhpLeadTime);
+        setLeadTime(newGhpLeadTime);
     };
 
     const updateGhpInStock = (event) => {
-        setGhpInStock(event.target.value);
-        const available = ghp(projectedDemandArray, productionArray, ghpInStock);
-        setAvailable(available);
+        setInStock(event.target.value);
     };
 
-    const updateGhpTable = (event) => {
-        const ghpData = ghp(projectedDemandArray, productionArray, ghpLeadTime, ghpInStock);
+    const updateAvailable = (event) => {
+        const ghpData = ghp(projectedDemandArray, productionArray, leadTime, inStock);
         setAvailable(ghpData['available']);
-        props.handleGhpData(ghpData);
+        props.handleResults(ghpData);
     };
 
     useEffect(() => {
-        updateGhpTable();
+        updateAvailable();
     }, [
-        ghpLeadTime,
-        ghpInStock,
+        leadTime,
+        inStock,
         projectedDemandArray,
         productionArray,
     ]);
@@ -62,8 +56,8 @@ function GhpTable(props) {
             <table className="table GeneratedTable">
                 <thead>
                     <tr className="disabled">
-                        <th>Tydzień</th>
-                        {Array.from({ length: ghpWeeksAmount }, (_, i) => i + 1).map(
+                        <th>Dane produkcyjne / Okres</th>
+                        {Array.from({ length: weeks }, (_, i) => i + 1).map(
                             (item) => (
                                 <td>{item}</td>
                             )
@@ -101,7 +95,7 @@ function GhpTable(props) {
                     </tr>
                     <tr className="calculated">
                         <th className="disabled">Dostępne</th>
-                        {available.map((item) => (
+                        {available?.map((item) => (
                             <td>{item}</td>
                         ))}
                     </tr>
@@ -111,8 +105,8 @@ function GhpTable(props) {
                             <input
                                 type="number"
                                 id=""
-                                onChange={updateGhpLeadTime}
-                                value={String(ghpLeadTime)}
+                                onChange={event => { setLeadTime(event.target.value) }}
+                                value={String(leadTime)}
                             />
                         </td>
                     </tr>
@@ -122,8 +116,8 @@ function GhpTable(props) {
                             <input
                                 type="number"
                                 id=""
-                                onChange={updateGhpInStock}
-                                value={String(ghpInStock)}
+                                onChange={event => { setInStock(event.target.value) }}
+                                value={String(inStock)}
                             />
                         </td>
                     </tr>

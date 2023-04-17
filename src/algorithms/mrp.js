@@ -1,16 +1,11 @@
 function mrp(
-  ghpProductionArray,
-  ghpLeadTime,
+  grossRequirements,
   scheduledReceipts = [],
   mrpInStock,
-  mrpLeadTime = 3,
+  leadTime,
   lotSize
 ) {
-  const weeksLength = ghpProductionArray.length;
-  const grossRequirements = Array(weeksLength).fill(0);
-  for (let i = ghpLeadTime; i < ghpProductionArray.length; i++) {
-    grossRequirements[i - ghpLeadTime] = ghpProductionArray[i];
-  }
+  const weeksLength = grossRequirements.length;
   const projectedEndingInventory = [];
   const netRequirements = [];
   const plannedOrderReleases = [];
@@ -32,9 +27,9 @@ function mrp(
       Number(grossRequirements[week]) +
       Number(scheduledReceipts[week]);
 
-    if (projectedEndingInventoryValue < 0 && week - mrpLeadTime >= 0) {
+    if (projectedEndingInventoryValue < 0 && week - leadTime >= 0) {
       netRequirements[week] = -projectedEndingInventoryValue;
-      plannedOrderReleases[week - mrpLeadTime] = Number(lotSize);
+      plannedOrderReleases[week - leadTime] = Number(lotSize);
       plannedOrderReceipts[week] = Number(lotSize);
       projectedEndingInventoryValue += Number(lotSize);
     }

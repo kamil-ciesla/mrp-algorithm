@@ -30,9 +30,9 @@ function calculateAvailable(
 }
 
 function calculateGrossRequirements(productionArray, ghpLeadTime) {
-  const grossRequirements = [Array(productionArray.length).fill(0)];
-  for (let i = ghpLeadTime; i < productionArray.length; i++) {
-    grossRequirements[i - ghpLeadTime] = productionArray[i];
+  const grossRequirements = productionArray.slice(ghpLeadTime);
+  for (let i = 0; i < ghpLeadTime; i++) {
+    grossRequirements.push(0);
   }
   return grossRequirements;
 }

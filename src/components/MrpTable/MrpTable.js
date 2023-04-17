@@ -1,30 +1,35 @@
 import "./MrpChart.css";
-import ghp from "../../algorithms/ghp";
 import mrp from "../../algorithms/mrp";
 
 import { useState } from "react";
 import { useEffect } from "react";
 
 function MrpTable(props) {
-    const ghpInStock = props.ghpData.ghpInStock;
-    const ghpLeadTime = props.ghpData.ghpLeadTime;
+    // =========================================
+    // Parametry MRP
+    // Ilość tygodni
+    const [weeks] = useState(props.weeks);
+    // Czas realizacji
+    const [leadTime, setLeadTime] = useState(props.leadTime);
+    // Wielkość partii
+    const [lotSize, setLotSize] = useState(props.lotSize);
+    // Na stanie
+    const [inStock, setMrpInStock] = useState(props.inStock);
+    // =========================================
 
-    const projectedDemandArray = props.ghpData.projectedDemandArray;
-    const productionArray = props.ghpData.productionArray;
 
-    const [mrpWeeksAmount, setMrpWeeksAmount] = useState(7);
-
-    const [grossRequirements, setGrossRequirements] = useState(props.ghpData.grossRequirements);
+    // Planowane przyjęcia
     const [scheduledReceipts, setScheduledReceipts] = useState([
-        ...Array(mrpWeeksAmount).fill(0),
+        ...Array(weeks).fill(0),
     ]);
+    // Przewidywane na stanie
     const [projectedEndingInventory, setProjectedEndingInventory] = useState([]);
+    // Zapotrzebowanie netto
     const [netRequirements, setNetRequirements] = useState([]);
+    // Planowane zamówienia
     const [plannedOrderReleases, setPlannedOrderReleases] = useState([]);
+    // Planowane przyjęcia zamówień
     const [plannedOrderReceipts, setPlannedOrderReceipts] = useState([]);
-    const [mrpLeadTime, setMrpLeadTime] = useState(3);
-    const [lotSize, setLotSize] = useState(40);
-    const [mrpInStock, setMrpInStock] = useState(22);
 
     const updateScheduledReceipts = (index) => (e) => {
         const newArray = [...scheduledReceipts];
@@ -32,54 +37,35 @@ function MrpTable(props) {
         setScheduledReceipts(newArray);
     };
 
-    const updateMrpLeadTime = (event) => {
-        setMrpLeadTime(event.target.value);
-    };
-
-    const updateLotSize = (event) => {
-        setLotSize(event.target.value);
-    };
-
-    const updateMrpInStock = (event) => {
-        setMrpInStock(event.target.value);
-    };
-    const updateMrpChart = (event) => {
-        console.log(productionArray)
+    const updateMrpChart = () => {
         const mrpResult = mrp(
-            productionArray,
-            grossRequirements,
+            props.grossRequirements,
             scheduledReceipts,
-            mrpInStock,
-            mrpLeadTime,
+            inStock,
+            leadTime,
             lotSize
         );
-        setProjectedEndingInventory(mrpResult["projectedEndingInventory"]);
-        setNetRequirements(mrpResult["netRequirements"]);
-        setPlannedOrderReleases(mrpResult["plannedOrderReleases"]);
-        setPlannedOrderReceipts(mrpResult["plannedOrderReceipts"]);
+        setProjectedEndingInventory(mrpResult.projectedEndingInventory);
+        setNetRequirements(mrpResult.netRequirements);
+        setPlannedOrderReleases(mrpResult.plannedOrderReleases);
+        setPlannedOrderReceipts(mrpResult.plannedOrderReceipts);
     };
 
-    useEffect(() => {
-        updateMrpChart();
-    }, [
-        ghpLeadTime,
-        ghpInStock,
-        projectedDemandArray,
-        productionArray,
-        mrpLeadTime,
+    useEffect(() => { updateMrpChart() }, [
+        props.grossRequirements,
+        leadTime,
         lotSize,
-        mrpInStock,
+        inStock,
     ]);
 
     return (
         <div className="mrp-table">
-            <h3>Tabela MRP</h3>
             <h4>Poziom BOM: {props.level}</h4>
             <table className="table GeneratedTable">
                 <thead>
                     <tr className="disabled">
-                        <th>Dane produkcyjne Okres</th>
-                        {Array.from({ length: mrpWeeksAmount }, (_, i) => i + 1).map(
+                        <th>Dane produkcyjne / Okres</th>
+                        {Array.from({ length: weeks }, (_, i) => i + 1).map(
                             (item) => (
                                 <td>{item}</td>
                             )
@@ -89,7 +75,7 @@ function MrpTable(props) {
                 <tbody>
                     <tr className="calculated">
                         <th className="disabled">Całkowite zapotrzebowanie</th>
-                        {grossRequirements.map((item) => (
+                        {props.grossRequirements.map((item) => (
                             <td>{item}</td>
                         ))}
                     </tr>
@@ -136,9 +122,9 @@ function MrpTable(props) {
                         <td>
                             <input
                                 type="number"
-                                name="mrpLeadTime"
-                                onChange={updateMrpLeadTime}
-                                value={String(mrpLeadTime)}
+                                name="leadTime"
+                                onChange={event => { setLeadTime(event.target.value) }}
+                                value={String(leadTime)}
                             />
                         </td>
                     </tr>
@@ -148,7 +134,7 @@ function MrpTable(props) {
                             <input
                                 type="number"
                                 name="lotSize"
-                                onChange={updateLotSize}
+                                onChange={event => { setLotSize(event.target.value) }}
                                 value={String(lotSize)}
                             />
                         </td>
@@ -158,9 +144,9 @@ function MrpTable(props) {
                         <td>
                             <input
                                 type="number"
-                                name="mrpInStock"
-                                onChange={updateMrpInStock}
-                                value={String(mrpInStock)}
+                                name="inStock"
+                                onChange={event => { setMrpInStock(event.target.value) }}
+                                value={String(inStock)}
                             />
                         </td>
                     </tr>
