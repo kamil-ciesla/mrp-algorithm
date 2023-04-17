@@ -1,7 +1,7 @@
 function mrp(
   grossRequirements,
   scheduledReceipts = [],
-  mrpInStock,
+  inStock,
   leadTime,
   lotSize
 ) {
@@ -17,9 +17,11 @@ function mrp(
     plannedOrderReceipts.push(0);
   }
 
-  projectedEndingInventory.push(
-    mrpInStock - grossRequirements[0] + Number(scheduledReceipts[0])
-  );
+  const firstProjectedEndingInventoryValue = inStock - grossRequirements[0] + Number(scheduledReceipts[0]);
+  projectedEndingInventory.push(firstProjectedEndingInventoryValue);
+  if (firstProjectedEndingInventoryValue < 0) {
+    netRequirements[0] = -firstProjectedEndingInventoryValue;
+  }
 
   for (let week = 1; week < weeksLength; week++) {
     let projectedEndingInventoryValue =
@@ -27,11 +29,13 @@ function mrp(
       Number(grossRequirements[week]) +
       Number(scheduledReceipts[week]);
 
-    if (projectedEndingInventoryValue < 0 && week - leadTime >= 0) {
+    if (projectedEndingInventoryValue < 0) {
       netRequirements[week] = -projectedEndingInventoryValue;
-      plannedOrderReleases[week - leadTime] = Number(lotSize);
-      plannedOrderReceipts[week] = Number(lotSize);
-      projectedEndingInventoryValue += Number(lotSize);
+      if (week - leadTime >= 0) {
+        plannedOrderReleases[week - leadTime] = Number(lotSize);
+        plannedOrderReceipts[week] = Number(lotSize);
+        projectedEndingInventoryValue += Number(lotSize);
+      }
     }
     projectedEndingInventory.push(projectedEndingInventoryValue);
   }
