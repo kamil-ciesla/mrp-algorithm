@@ -17,10 +17,10 @@ function MrpChart() {
     <div className="MrpChart">
       <GhpTable
         weeks={10}
-        leadTime={1}
-        inStock={2}
-        projectedDemandArray={[0, 0, 0, 0, 20, 0, 40]}
-        productionArray={[0, 0, 0, 0, 28, 0, 30]}
+        leadTime={2}
+        inStock={5}
+        projectedDemandArray={[0, 0, 0, 0, 0, 10, 0, 20]}
+        productionArray={[0, 0, 0, 0, 0, 20, 0, 15]}
         handleResults={handleGhpResults}
       />
       <h3>Tabele MRP</h3>
@@ -28,38 +28,38 @@ function MrpChart() {
         ghpResults.grossRequirements ?
           [
             <MrpTable
-              productName={'Blaty'}
+              productName={'Płyta główna'}
               weeks={10}
               grossRequirements={ghpResults.grossRequirements}
               quantityMultiplier={1}
-              leadTime={3}
-              lotSize={40}
+              leadTime={2}
+              lotSize={30}
               level={1}
-              inStock={22}
+              inStock={10}
               passDataToNextLevel={setFirstLevelMrpResults}
             />,
             firstLevelMrpResults ?
               <MrpTable
-                productName={'Płyta pilśniowa'}
+                productName={'Karta graficzna'}
                 weeks={10}
                 grossRequirements={firstLevelMrpResults}
                 quantityMultiplier={1}
-                leadTime={1}
-                lotSize={50}
+                leadTime={3}
+                lotSize={8}
                 level={2}
-                inStock={10}
+                inStock={15}
               />
               :
               <div>Loading mrp..</div>,
             <MrpTable
-              productName={'Nogi'}
+              productName={'Kości pamięci RAM'}
               weeks={10}
               grossRequirements={ghpResults.grossRequirements}
-              quantityMultiplier={4}
-              leadTime={2}
-              lotSize={120}
+              quantityMultiplier={2}
+              leadTime={1}
+              lotSize={60}
               level={1}
-              inStock={40}
+              inStock={30}
             />
           ]
           :
@@ -70,7 +70,7 @@ function MrpChart() {
   //   <GhpTable
   //     weeks={10}
   //     leadTime={1}
-  //     inStock={2}
+  //     inStock={2}  
   //     projectedDemandArray={[0, 0, 0, 0, 20, 0, 40]}
   //     productionArray={[0, 0, 0, 0, 28, 0, 30]}
   //     handleResults={handleGhpResults}
