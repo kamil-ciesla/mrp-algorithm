@@ -1,3 +1,0 @@
-Niestety skompresowany plik repozytorium był zbyt duzy aby go wyslac, dlatego podaje link do repozytorium
-
-https://github.com/kamil-ciesla/mrp-algorithm
