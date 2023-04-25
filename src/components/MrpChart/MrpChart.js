@@ -3,7 +3,6 @@ import MrpTable from '../MrpTable/MrpTable'
 import GhpTable from '../GhpTable/GhpTable'
 
 import { useState } from "react";
-import { useEffect } from "react";
 
 function MrpChart() {
   const [ghpResults, setGhpResults] = useState({});
@@ -32,6 +31,7 @@ function MrpChart() {
               productName={'Blaty'}
               weeks={10}
               grossRequirements={ghpResults.grossRequirements}
+              quantityMultiplier={1}
               leadTime={3}
               lotSize={40}
               level={1}
@@ -43,6 +43,7 @@ function MrpChart() {
                 productName={'Płyta pilśniowa'}
                 weeks={10}
                 grossRequirements={firstLevelMrpResults}
+                quantityMultiplier={1}
                 leadTime={1}
                 lotSize={50}
                 level={2}
@@ -53,7 +54,8 @@ function MrpChart() {
             <MrpTable
               productName={'Nogi'}
               weeks={10}
-              grossRequirements={[0, 0, 0, 112, 0, 120]}
+              grossRequirements={ghpResults.grossRequirements}
+              quantityMultiplier={4}
               leadTime={2}
               lotSize={120}
               level={1}
@@ -64,6 +66,58 @@ function MrpChart() {
           <div>Loading mrp..</div>
       }
     </div>
+  //   <div className="MrpChart">
+  //   <GhpTable
+  //     weeks={10}
+  //     leadTime={1}
+  //     inStock={2}
+  //     projectedDemandArray={[0, 0, 0, 0, 20, 0, 40]}
+  //     productionArray={[0, 0, 0, 0, 28, 0, 30]}
+  //     handleResults={handleGhpResults}
+  //   />
+  //   <h3>Tabele MRP</h3>
+  //   {
+  //     ghpResults.grossRequirements ?
+  //       [
+  //         <MrpTable
+  //           productName={'Blaty'}
+  //           weeks={10}
+  //           grossRequirements={ghpResults.grossRequirements}
+  //           quantityMultiplier={1}
+  //           leadTime={3}
+  //           lotSize={40}
+  //           level={1}
+  //           inStock={22}
+  //           passDataToNextLevel={setFirstLevelMrpResults}
+  //         />,
+  //         firstLevelMrpResults ?
+  //           <MrpTable
+  //             productName={'Płyta pilśniowa'}
+  //             weeks={10}
+  //             grossRequirements={firstLevelMrpResults}
+  //             quantityMultiplier={1}
+  //             leadTime={1}
+  //             lotSize={50}
+  //             level={2}
+  //             inStock={10}
+  //           />
+  //           :
+  //           <div>Loading mrp..</div>,
+  //         <MrpTable
+  //           productName={'Nogi'}
+  //           weeks={10}
+  //           grossRequirements={ghpResults.grossRequirements}
+  //           quantityMultiplier={4}
+  //           leadTime={2}
+  //           lotSize={120}
+  //           level={1}
+  //           inStock={40}
+  //         />
+  //       ]
+  //       :
+  //       <div>Loading mrp..</div>
+  //   }
+  // </div>
   )
 
 }

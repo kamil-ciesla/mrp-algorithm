@@ -29,15 +29,6 @@ function GhpTable(props) {
         setProductionArray(newArray);
     };
 
-    const updateGhpLeadTime = (event) => {
-        const newGhpLeadTime = Number(event.target.value);
-        setLeadTime(newGhpLeadTime);
-    };
-
-    const updateGhpInStock = (event) => {
-        setInStock(event.target.value);
-    };
-
     const updateAvailable = (event) => {
         const ghpData = ghp(projectedDemandArray, productionArray, leadTime, inStock);
         setAvailable(ghpData['available']);

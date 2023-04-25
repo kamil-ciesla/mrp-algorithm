@@ -15,6 +15,10 @@ function MrpTable(props) {
     const [lotSize, setLotSize] = useState(props.lotSize);
     // Na stanie
     const [inStock, setMrpInStock] = useState(props.inStock);
+    // Mnoznik ilości
+    const [quantityMultiplier, setQuantityMulitiplier] = useState(props.quantityMultiplier)
+
+    const grossRequirements = props.grossRequirements.slice(0,props.weeks)
     // =========================================
 
 
@@ -39,7 +43,8 @@ function MrpTable(props) {
 
     const updateMrpChart = () => {
         const mrpResult = mrp(
-            props.grossRequirements,
+            grossRequirements,
+            quantityMultiplier,
             scheduledReceipts,
             inStock,
             leadTime,
@@ -56,7 +61,8 @@ function MrpTable(props) {
     };
 
     useEffect(() => { updateMrpChart() }, [
-        props.grossRequirements,
+        grossRequirements,
+        quantityMultiplier, 
         scheduledReceipts,
         leadTime,
         lotSize,
@@ -80,8 +86,8 @@ function MrpTable(props) {
                 <tbody>
                     <tr className="calculated">
                         <th className="disabled">Całkowite zapotrzebowanie</th>
-                        {props.grossRequirements.map((item) => (
-                            <td>{String(item) == '0' ? '' : String(item)}</td>
+                        {grossRequirements.map((item) => (
+                            <td>{String(item) == '0' ? '' : String(item*quantityMultiplier)}</td>
                         ))}
                     </tr>
                     <tr>
@@ -163,6 +169,17 @@ function MrpTable(props) {
                                 name="inStock"
                                 onChange={event => { setMrpInStock(event.target.value) }}
                                 value={String(inStock)}
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th className="disabled">Mnożnik ilości</th>
+                        <td>
+                            <input
+                                type="number"
+                                name="inStock"
+                                onChange={event => { setQuantityMulitiplier(event.target.value) }}
+                                value={quantityMultiplier}
                             />
                         </td>
                     </tr>

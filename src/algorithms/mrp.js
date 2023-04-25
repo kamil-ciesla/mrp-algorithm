@@ -1,10 +1,12 @@
 function mrp(
   grossRequirements,
+  quantityMultiplier,
   scheduledReceipts = [],
   inStock,
   leadTime,
   lotSize
 ) {
+  grossRequirements = grossRequirements.map(item => item * quantityMultiplier)
   const weeksLength = grossRequirements.length;
   const projectedEndingInventory = [];
   const netRequirements = [];
