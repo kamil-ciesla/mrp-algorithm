@@ -1,3 +1,6 @@
+Link to application deployed on github pages:
+https://kamil-ciesla.github.io/mrp-algorithm/
+
 Requirements:
 - Node and npm installed
 
